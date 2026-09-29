@@ -1,52 +1,44 @@
-let books = [];
-
 function addBook() {
+
     let bookName = document.getElementById("bookName").value;
     let authorName = document.getElementById("authorName").value;
 
     if (bookName === "" || authorName === "") {
-        alert("Please enter book name and author name.");
+        alert("Please enter book name and author name");
         return;
     }
 
-    books.push({
-        name: bookName,
-        author: authorName,
-        status: "Available"
-    });
+    let table = document.getElementById("bookList");
 
-    displayBooks();
+    let row = table.insertRow();
+
+    row.insertCell(0).innerHTML = bookName;
+    row.insertCell(1).innerHTML = authorName;
+    row.insertCell(2).innerHTML = "Available";
+
+    row.insertCell(3).innerHTML =
+        '<button onclick="issueBook(this)">Issue</button>';
 
     document.getElementById("bookName").value = "";
     document.getElementById("authorName").value = "";
 }
 
-function displayBooks() {
-    let bookList = document.getElementById("bookList");
+function issueBook(button) {
 
-    bookList.innerHTML = "";
+    let row = button.parentElement.parentElement;
 
-    books.forEach((book, index) => {
-        bookList.innerHTML += `
-            <tr>
-                <td>${book.name}</td>
-                <td>${book.author}</td>
-                <td>${book.status}</td>
-                <td>
-                    <button onclick="issueBook(${index})">Issue</button>
-                    <button onclick="returnBook(${index})">Return</button>
-                </td>
-            </tr>
-        `;
-    });
+    row.cells[2].innerHTML = "Issued";
+
+    button.innerHTML = "Return";
+    button.setAttribute("onclick", "returnBook(this)");
 }
 
-function issueBook(index) {
-    books[index].status = "Issued";
-    displayBooks();
-}
+function returnBook(button) {
 
-function returnBook(index) {
-    books[index].status = "Available";
-    displayBooks();
+    let row = button.parentElement.parentElement;
+
+    row.cells[2].innerHTML = "Available";
+
+    button.innerHTML = "Issue";
+    button.setAttribute("onclick", "issueBook(this)");
 }
