@@ -1,4 +1,5 @@
 function addBook() {
+
     let bookName = document.getElementById("bookName").value;
     let authorName = document.getElementById("authorName").value;
 
@@ -8,6 +9,7 @@ function addBook() {
     }
 
     let table = document.getElementById("bookList");
+
     let row = table.insertRow();
 
     row.innerHTML = `
@@ -24,27 +26,38 @@ function addBook() {
     document.getElementById("authorName").value = "";
 }
 
+
 function issueBook(button) {
+
     let row = button.parentElement.parentElement;
+
     row.cells[2].innerText = "Issued";
 
     button.innerText = "Return";
+
     button.onclick = function () {
         returnBook(this);
     };
 }
 
+
 function returnBook(button) {
+
     let row = button.parentElement.parentElement;
+
     row.cells[2].innerText = "Available";
 
     button.innerText = "Issue";
+
     button.onclick = function () {
         issueBook(this);
     };
 }
 
+
 function deleteBook(button) {
+
     let row = button.parentElement.parentElement;
+
     row.remove();
 }
